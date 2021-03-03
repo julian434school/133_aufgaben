@@ -36,23 +36,20 @@ function slotMachine() {
 
 
     var xhttp = new XMLHttpRequest();
-/*
+
     if(xhttp.readyState < 4) {
-        document.getElementById("ausgabeajax").innerHTML = "Request Pending" + xhttp.status + xhttp.readyState;
+        document.getElementById("ausgabeajax").innerHTML = "Request Pending" 
+        + " Ready State:" + xhttp.readyState;
     } else if(readyState == 4) { 
         if(xhttp.status == 200) {
             document.getElementById("ausgabeajax").innerHTML = xhttp.responseText;
         }
     } else {
         document.getElementById("ausgabeajax").innerHTML = "File not found";
-    }*/
-
-    document.getElementById("ausgabeajax").innerHTML = xhttp.responseText;
-
+    }
     // Aufbau des requests
     xhttp.open("GET", "testfile.txt", true);
     xhttp.send();
-
     
     if(balance <= 0) {
         
