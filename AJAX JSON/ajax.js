@@ -5,6 +5,10 @@ function suchen() {
   .then(response => response.json())
   .then(data => personObj = data);
   console.log(personObj);
+
+  $("p#queryresults").append(personObj.success);
+
 }
 
-$("p").append(personObj.vorname);
+
+
