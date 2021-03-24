@@ -20,49 +20,12 @@
       </div>
       <div class="col">
         <h1>AJAX & JSON!</h1>
-        <button class="btn btn-info m-5 p-5" id="searchButton" onclick="search()">Suchen</button>
-        <p>Queryresults:</p>
-        <p id="queryresults"></p>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Vorname</th>
-              <th scope="col">Nachname</th>
-              <th scope="col">Email</th>
-              <th scope="col">Ort</th>
-              <th scope="col">PLZ</th>
-              <th scope="col">Strasse</th>
-            </tr>
-          </thead>
+        <button class="btn btn-info m-5 p-5" id="searchButton"
+          onclick="search();buildHtmlTable('#excelDataTable')">Suchen</button>
+        <label for="fname">First name:</label>
+        <input type="text" id="inputfield" name="inputf" onchange="inputSearch()"><br><br>
+        <table class="table" id="tabledata">
           <tbody>
-            <tr>
-              <th scope="row"></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
           </tbody>
         </table>
       </div>

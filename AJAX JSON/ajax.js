@@ -1,38 +1,55 @@
-var personObj = new Object();
-
-/*
-function suchen() {
-    fetch("https://gibm.becknet.ch/personaldaten/personal.php?name=julian")
-  .then(response => response.json())
-  .then(data => personObj = data);
-  console.log(personObj);
-
-  $("p#queryresults").append(personObj.success);
-
-}
-*/
-/*
-function search() {
-  $.get("https://gibm.becknet.ch/personaldaten/personal.php?name=julian", function (data) {
-    $("p#queryresults").append(data);
-    alert("Load was performed.");
-  });
-}
-*/
+var myList;
 
 function search() {
-    $.getJSON('https://gibm.becknet.ch/personaldaten/personal.php?name=julian', function (data) {
-      $("#queryresults").text(data.data[0].vorname);
+    $.getJSON('https://gibm.becknet.ch/personaldaten/personal.php?name=ju', function (data) {
+      myList = data.data;
+      console.log(data);
+      //$("#queryresults").text(data.data[0].vorname);
+      buildHtmlTable();
     });
 }
 
-/*
-(document).ready(function () {
-  $("searchButton").click(function () {
-    $.getJSON('http://query.yahooapis.com/v1/public/yql?q=select%20%2a%20from%20yahoo.finance.quotes%20WHERE%20symbol%3D%27WRC%27&format=json&diagnostics=true&env=store://datatables.org/alltableswithkeys&callback', function (data) {
-      $("p#queryresults").append(data);
-    });
+function inputSearch() {
+  $.getJSON("https://gibm.becknet.ch/personaldaten/personal.php?name=" + document.getElementById("inputfield").value, function (data) {
+    myList = data.data;
+    console.log(data);
+    $("#queryresults").text(data.data[0].vorname);
+    buildHtmlTable();
   });
-});
-*/
+}
+
+function buildHtmlTable() {
+  var columns = addAllColumnHeaders(myList);
+
+  for (var i = 0; i < myList.length; i++) {
+    var row$ = $('<tr/>');
+    for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+      var cellValue = myList[i][columns[colIndex]];
+      if (cellValue == null) cellValue = "";
+      row$.append($('<td/>').html(cellValue));
+    }
+    $("#tabledata").append(row$);
+  }
+}
+
+// Adds a header row to the table and returns the set of columns.
+// Need to do union of keys from all records as some records may not contain
+// all records.
+function addAllColumnHeaders(myList) {
+  var columnSet = [];
+  var headerTr$ = $('<tr/>');
+
+  for (var i = 0; i < myList.length; i++) {
+    var rowHash = myList[i];
+    for (var key in rowHash) {
+      if ($.inArray(key, columnSet) == -1) {
+        columnSet.push(key);
+        headerTr$.append($('<th/>').html(key));
+      }
+    }
+  }
+  $("#tabledata").append(headerTr$);
+
+  return columnSet;
+}
 
