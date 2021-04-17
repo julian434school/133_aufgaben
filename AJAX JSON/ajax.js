@@ -4,7 +4,7 @@ function search() {
     $.getJSON('https://gibm.becknet.ch/personaldaten/personal.php?name=ju', function (data) {
       myList = data.data;
       console.log(data);
-      //$("#queryresults").text(data.data[0].vorname);
+      $("#queryresults").text(data.data[0].vorname);
       buildHtmlTable();
     });
 }

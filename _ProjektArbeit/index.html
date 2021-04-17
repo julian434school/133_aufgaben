@@ -1,0 +1,62 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>Projekt Arbeit Julian Mathis</title>
+</head>
+
+<body>
+    <div class="errorBar" style="background-color: red;color:white;"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-1">
+            </div>
+            <!-- Title Header -->
+            <h1>Stundenplan GIBM</h1>
+            <div class="col">
+                <!-- Berufsdropdown -->
+                <label for="berufsgruppe">Berufsgruppe auswählen</label>
+                <select class="form-select" style="width: 300px !important;" name="berufsgruppe" id="berufsgruppe"
+                    onchange="getDropdownSelectionBerufe()">
+                    <option></option>
+                </select>
+            </div>
+            <div class="col">
+                <!-- Klassendropdown -->
+                <label for="klassengruppe">Klasse auswählen</label>
+                <select class="form-select" style="width: 200px !important;" name="klassengruppe" id="klassengruppe"
+                    onchange="getDropdownSelectionKlasse()">
+                    <option></option>
+                </select>
+
+            </div>
+        </div>
+
+        <!-- Stundentabelle -->
+        <div class="row stundenplanrow">
+            <div class="col-12" id="stundenplan">
+                <table class="table" id="tabledata">
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <!-- AJAX sorgt dafür, dass die Website asynchron laufen kann und nicht immer neu geladen muss bei einem HTTP-Request-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
