@@ -41,8 +41,8 @@
                 <div class="col">
                     <!-- Wochenselektor -->
                     <h3 id="dateText"></h3>
-                    <button type="button" class="btn btn-primary" id="weekTogglerBack" onclick="weekBack()"><</button>
-                    <button type="button" class="btn btn-primary" id="weekTogglerForward" onclick="weekForward()">></button>
+                    <button type="button" class="btn btn-primary" id="weekTogglerBack" onclick="weekBack()">Jahr zurück</button>
+                    <button type="button" class="btn btn-primary" id="weekTogglerForward" onclick="weekForward()">Jahr weiter</button>
                 </div>    
             </div>
         </div>
@@ -50,7 +50,7 @@
         <!-- Stundentabelle -->
         <div class="row stundenplanrow">
             <div class="col-12" id="stundenplan">
-                <table class="table" id="tabledata">
+                <table class="table table-responsive" id="tabledata" style="overflow-x:auto;">
                     <tbody>
                     </tbody>
                 </table>
