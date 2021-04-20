@@ -16,7 +16,7 @@
     <div class="errorBar" style="background-color: red;color:white;"></div>
 
     <div class="container">
-        <div class="row">
+        <div class="row m-5">
             <div class="col-1">
             </div>
             <!-- Title Header -->
@@ -26,7 +26,7 @@
                 <label for="berufsgruppe">Berufsgruppe auswählen</label>
                 <select class="form-select" style="width: 300px !important;" name="berufsgruppe" id="berufsgruppe"
                     onchange="getDropdownSelectionBerufe()">
-                    <option></option>
+                    <option disabled selected value></option>
                 </select>
             </div>
             <div class="col">
@@ -34,9 +34,16 @@
                 <label for="klassengruppe">Klasse auswählen</label>
                 <select class="form-select" style="width: 200px !important;" name="klassengruppe" id="klassengruppe"
                     onchange="getDropdownSelectionKlasse()">
-                    <option></option>
+                    <option disabled selected value></option>
                 </select>
-
+            </div>
+            <div class="row m-5">
+                <div class="col">
+                    <!-- Wochenselektor -->
+                    <h3 id="dateText"></h3>
+                    <button type="button" class="btn btn-primary" id="weekTogglerBack" onclick="weekBack()"><</button>
+                    <button type="button" class="btn btn-primary" id="weekTogglerForward" onclick="weekForward()">></button>
+                </div>    
             </div>
         </div>
 
@@ -48,6 +55,7 @@
                     </tbody>
                 </table>
             </div>
+            <h3 id="noLessonsText"></h3>
         </div>
 
 

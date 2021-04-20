@@ -3,10 +3,9 @@ var klassenList;
 var selectionBerufe;
 var selectionKlassen;
 var tableList;
-// Variabel für die aktuelle Woche
-let week = moment().week();
-// Variable für das aktuelle Jahr
-let year = moment().year();
+
+// Momentjs Datuum
+let date = moment();
 
 // Füllt die Berufe Dropdown mit dem JSON resultat der Anfrage der URL auf
 function searchBerufe() {
@@ -28,20 +27,18 @@ function searchBerufe() {
 }
 
 function getDropdownSelectionBerufe() {
-  this.selectionBerufe = $("#berufsgruppe option:selected").val();
+  selectionBerufe = $("#berufsgruppe option:selected").val();
   searchKlassen();
 }
 
 function getDropdownSelectionKlasse() {
-  this.selectionKlassen = $("#klassengruppe option:selected").val();
+  selectionKlassen = $("#klassengruppe option:selected").val();
   searchTableData();
-  $("#tabledata").empty();
-  buildHtmlTable();
 }
 
 // Füllt die Klassen Dropdown mit dem JSON resultat der Anfrage der URL mit dem enstprechendem Beruf auf
 function searchKlassen() {
-  $.getJSON("http://sandbox.gibm.ch/klassen.php?beruf_id=" + this.selectionBerufe, function (data) {
+  $.getJSON("http://sandbox.gibm.ch/klassen.php?beruf_id=" + selectionBerufe, function (data) {
     $(".errorBar").empty();
     $("#klassengruppe").empty();
     klassenList = data;
@@ -68,13 +65,13 @@ function searchKlassen() {
 
 // Füllt die Klassen Dropdown mit dem JSON resultat der Anfrage der URL mit dem enstprechendem Beruf auf
 function searchTableData() {
-  $.getJSON("http://sandbox.gibm.ch/tafel.php?klasse_id=" + this.selectionKlassen + "&woche=" + week + "-" + year, function (data) {
+  $.getJSON("http://sandbox.gibm.ch/tafel.php?klasse_id=" + selectionKlassen + "&woche=" + date.format("WW-YYYY"), function (data) {
     tableList = data;
-    if (data.length == 0) {
-      $("#stundenplanrow").prop("disabled", true);
-    } else {
-      $("#stundenplanrow").prop("disabled", false);
-    }
+    $("#tabledata").empty();
+    buildHtmlTable();
+    $("#weekTogglerBack").prop("disabled", false);
+    $("#weekTogglerForward").prop("disabled", false);  
+    displayNoTableMessage();
   })
     // Gibt eine Nachricht zurück, falls die Anfrage fehlschlägt
     .fail(function () {
@@ -91,15 +88,12 @@ function showError(errorMessage) {
 
 
 function buildHtmlTable() {
-  var columns = addAllColumnHeaders(tableList);
+  var columns = addAllColumnHeaders();
 
   for (var i = 0; i < tableList.length; i++) {
     var row$ = $('<tr/>');
     for (var colIndex = 0; colIndex < columns.length; colIndex++) {
       var cellValue = tableList[i][columns[colIndex]];
-      console.log("value: " + tableList[i].tafel_wochentag);
-      //console.log("cellval: " + cellValue);
-
       if (tableList[i].tafel_wochentag == 0) {
         tableList[i].tafel_wochentag = "Sonntag";
       }
@@ -133,12 +127,12 @@ function buildHtmlTable() {
 // Adds a header row to the table and returns the set of columns.
 // Need to do union of keys from all records as some records may not contain
 // all records.
-function addAllColumnHeaders(myList) {
+function addAllColumnHeaders() {
   var columnSet = [];
   var headerTr$ = $('<tr/>');
 
-  for (var i = 0; i < myList.length; i++) {
-    var rowHash = myList[i];
+  for (var i = 0; i < tableList.length; i++) {
+    var rowHash = tableList[i];
     delete rowHash['tafel_id'];
     delete rowHash['tafel_fach'];
     delete rowHash['tafel_kommentar'];
@@ -177,4 +171,32 @@ function addAllColumnHeaders(myList) {
   return columnSet;
 }
 
+function weekBack() {
+  date.subtract(1, "week").format("WW-YYYY");
+  searchTableData();
+  $("#dateText").text(date.format("WW-YYYY"));
+}
+
+function weekForward() {
+  date.add(1, "week").format("WW-YYYY");
+  searchTableData();
+  $("#dateText").text(date.format("WW-YYYY"));
+}
+
+function setYear() {
+}
+
 searchBerufe();
+
+if (berufeList == undefined) {
+  $("#weekTogglerBack").prop("disabled", true);
+  $("#weekTogglerForward").prop("disabled", true);
+}
+
+function displayNoTableMessage() {
+  if(tableList.length == 0) {
+    $("#noLessonsText").text("Keine Lektionen diese Woche");
+  } else {
+    $("#noLessonsText").text("");
+  }
+}
